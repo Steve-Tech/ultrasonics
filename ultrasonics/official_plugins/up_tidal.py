@@ -95,7 +95,7 @@ def run(settings_dict, **kwargs):
             self.session = tidalapi.Session()
 
         def login(self):
-            success = self.session.load_oauth_session(database["session_id"], database["token_type"], database["access_token"], database["refresh_token"])
+            success = self.session.load_oauth_session(database["token_type"], database["access_token"], database["refresh_token"])
             if success:
                 log.debug("Successfully loaded session")
             else:
@@ -230,7 +230,7 @@ def run(settings_dict, **kwargs):
             """
             Wrapper for Tidal `current_user_playlists`.
             """
-            
+
             playlists = self.request(self.session.user.playlists)
 
             log.info(f"Found {len(playlists)} playlist(s) on Tidal.")
@@ -251,7 +251,7 @@ def run(settings_dict, **kwargs):
             """
             Wrapper for TidalAPI `playlist_tracks`.
             """
-            
+
             tracks = self.request(self.session.playlist, playlist_id).tracks()
 
             track_list = []
@@ -322,7 +322,7 @@ def run(settings_dict, **kwargs):
             self.saved_songs_db = os.path.join(
                 _ultrasonics["config_dir"], "up_tidal", "saved_songs.db"
             )
-            
+
             # Create the containing folder if it doesn't already exist
             try:
                 os.mkdir(os.path.dirname(self.saved_songs_db))
@@ -600,7 +600,7 @@ def test(database, **kwargs):
     # global_settings = kwargs["global_settings"]
 
     session = tidalapi.Session()
-    assert session.load_oauth_session(database["session_id"], database["token_type"], database["access_token"], database["refresh_token"]), "Error logging in"
+    assert session.load_oauth_session(database["token_type"], database["access_token"], database["refresh_token"]), "Error logging in"
 
 
 def builder(**kwargs):
